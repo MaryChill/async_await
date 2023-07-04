@@ -1,7 +1,17 @@
 import GameSavingLoader from '../GameSavingLoader';
+import { saveData } from '../reader';
+import GameSaving from '../GameSaving';
 
-test('works with async/await', async () => {
-  expect.assertions(1);
-  const data = await GameSavingLoader.load();
-  expect(data).toEqual('{"id":9,"created":1546300800,"userInfo":{"id":1,"name":"Hitman","level":10,"points":2000}}');
+const testData = '{"id": 9,"created": 1546300800, "userInfo": {"id": 1, "name": "Rembo", "level": 10, "points":2000}}';
+const hitman = new GameSaving(JSON.parse(saveData));
+const rembo = new GameSaving(JSON.parse(testData));
+
+test('Test case №1', async () => {
+  const save = await GameSavingLoader.load();
+  expect(save).toEqual(hitman);
+});
+
+test('Test case №2', async () => {
+  const save = await GameSavingLoader.load();
+  expect(save).not.toEqual(rembo);
 });
